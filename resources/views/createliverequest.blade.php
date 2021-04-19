@@ -14,20 +14,35 @@
                     Email: {{\Illuminate\Support\Facades\Auth::user()->email}}
                 </div>
 
-                <div>
-                    <form action="/dashboard/store" method="post">
+                <div class="flex items-center justify-center">
+                    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="/dashboard/store" method="post">
                         {{ csrf_field() }}
+                        <div class="mb-4">
+                        Pilih Semester:
                         <select name="semester_ta">
                             <option value="ganjil">Ganjil 2020/2021</option>
                             <option value="antara">Antara 2020/2021</option>
                             <option value="ganjil">Genap 2020/2021</option>
                         </select>
-                        Semester <input name="semester" required="required"> <br/>
-                        Kode Mata Kuliah <input type="text" name="k_mk" required="required"> <br/>
-                        Mata Kuliah <input type="text" name="mk" required="required"> <br/>
-                        SKS <input type="number" name="sks" required="required"> <br/>
-                        Available Seats <input name="a_seats" required="required"> <br/>
+                        </div>
+                        <div class="mb-4">
+                        Semester <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="semester" required="required"> <br/>
+                        </div>
+                        <div class="mb-4">
+                        Kode Mata Kuliah <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  type="text" name="k_mk" required="required"> <br/>
+                        </div>
+                        <div class="mb-4">
+                        Mata Kuliah <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="mk" required="required"> <br/>
+                        </div>
+                        <div class="mb-4">
+                        SKS <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" name="sks" required="required"> <br/>
+                        </div>
+                        <div class="mb-4">
+                        Available Seats <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="a_seats" required="required"> <br/>
+                        </div>
+                        <div class="flex items-center justify-center">
                         <input type="submit" value="Simpan Data">
+                        </div>
                     </form>
                 </div>
             </div>
