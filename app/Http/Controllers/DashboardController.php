@@ -20,10 +20,10 @@ class DashboardController extends Controller
         else if(Auth::user()->hasRole('admin')){
             $lr = DB::table('lr2')->get();
             $notifications = DB::table('lr2')->distinct()->count('id_mhs');
-            //$getmahasiswa = Lr2::with(['name'])->get();
-            $getmahasiswa = DB::table('lr2')->distinct()->select('lr2.id_mhs', 'users.name')
+            $getmahasiswa = DB::table('lr2')->distinct()->select('lr2.id_mhs', 'users.name', 'lr2.mk')
             ->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
-            return view('dashboard',['lr2'=> $lr, 'notif' => $notifications, 'name' => $getmahasiswa]);
+            //dd($lr, $notifications, $getmahasiswa);
+            return view('dashboard', compact('lr', 'notifications', 'getmahasiswa'));
         }
     }
     public function liverequest(){
@@ -33,7 +33,11 @@ class DashboardController extends Controller
     }
 
     public function createliverequest(){
-        return view('createliverequest');
+        $getallsemester = DB::table('kode_semester')->get();
+        $getsemester = DB::table('mk')->distinct()->select('mk.semester_id', 'kode_semester.semester')
+            ->join('kode_semester', 'mk.semester_id', '=', 'kode_semester.id')->get();
+        //dd($getallsemester);
+        return view('createliverequest', ['semester' => $getsemester, 'allsemester' => $getallsemester]);
     }
 
     public function requestkrs($id){
@@ -66,10 +70,10 @@ class DashboardController extends Controller
     public function store(Request $request){
         DB::table('mk')->insert([
             'k_mk' => $request->k_mk,
+            'semester_id' => $request->semester_id,
             'mk' => $request->mk,
             'sks' => $request->sks,
             'semester' => $request->semester,
-            'Semester_TA' => $request->semester_ta,
             'available_seats' => $request->a_seats
         ]);
 

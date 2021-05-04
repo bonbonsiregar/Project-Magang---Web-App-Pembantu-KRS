@@ -19,10 +19,10 @@
                         {{ csrf_field() }}
                         <div class="mb-4">
                         Pilih Semester:
-                        <select name="semester_ta">
-                            <option value="ganjil">Ganjil 2020/2021</option>
-                            <option value="antara">Antara 2020/2021</option>
-                            <option value="ganjil">Genap 2020/2021</option>
+                        <select name="semester_id">
+                            @foreach($allsemester as $sm)
+                            <option value="{{$sm->id}}">{{$sm->id}} {{$sm->semester}}</option>
+                            @endforeach
                         </select>
                         </div>
                         <div class="mb-4">
