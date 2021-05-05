@@ -20,10 +20,13 @@ class DashboardController extends Controller
         else if(Auth::user()->hasRole('admin')){
             $lr = DB::table('lr2')->get();
             $notifications = DB::table('lr2')->distinct()->count('id_mhs');
-            $getmahasiswa = DB::table('lr2')->distinct()->select('lr2.id_mhs', 'users.name', 'lr2.mk')
-            ->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
-            //dd($lr, $notifications, $getmahasiswa);
-            return view('dashboard', compact('lr', 'notifications', 'getmahasiswa'));
+            $getmahasiswa = DB::table('lr2')->select('lr2.id_mhs', 'users.name', 'lr2.mk')
+            ->join('users', 'lr2.id_mhs', '=', 'users.id')->distinct()->get();
+            $getmahasiswa2 = DB::table('lr2')->select('lr2.id_mhs', 'users.name', 'lr2.mk')
+            ->join('users', 'lr2.id_mhs', '=', 'users.id')->distinct()->get();
+            //$get = $getmahasiswa2->groupBy('name')->all();
+            //dd($lr, $notifications, $getmahasiswa, $get);
+            return view('dashboard', compact('lr', 'notifications', 'getmahasiswa', 'getmahasiswa2'));
         }
     }
     public function liverequest(){
@@ -98,5 +101,11 @@ class DashboardController extends Controller
     public function nameasrequest($id){
         $req = DB::table('lr2')->where('id_mhs', $id)->get();
         return view('nameasrequest', compact('req'));
+    }
+
+    public function mkasrequest($id){
+        $getmahasiswa2 = DB::table('lr2')->distinct()->select('lr2.id', 'lr2.id_mhs', 'users.name', 'lr2.mk', 'lr2.k_mk', 'lr2.status_request')->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
+        $req = $getmahasiswa2->where('id', '=', $id)->all();
+        return view('mkasrequest', compact('req'));
     }
 }

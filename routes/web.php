@@ -43,6 +43,8 @@ Route::get('/dashboard/cancel/{id}', 'App\Http\Controllers\DashboardController@c
 
 Route::get('/dashboard/nameasrequest/{id}', 'App\Http\Controllers\DashboardController@nameasrequest')->name('dashboard.nameasrequest');
 
+Route::get('/dashboard/mkasrequest/{id}', 'App\Http\Controllers\DashboardController@mkasrequest')->name('dashboard.mkasrequest');
+
 Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     Route::get('/dashboard/requestkrs/{id}', 'App\Http\Controllers\DashboardController@requestkrs')->name('dashboard.requestkrs');
 });
