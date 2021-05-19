@@ -24,47 +24,7 @@
                     @endforeach
                     </ul>
                   </div>
-                    <div class="container">
-                        <table class="table table-condensed"  id="myTable">
-                            <thead>
-                            <tr>
-                                <th>Mata Kuliah</th>
-                            </tr>
-                            </thead>
-                            @foreach($getmahasiswa2 as $collapse)
-                            <tbody class="panel">
-                            <tr data-bs-toggle="collapse" data-bs-target="#demo{{$collapse->id_mhs}}" data-bs-parent="#myTable">
-                                <strong><td>{{ $collapse->mk }}</td></strong>
-                            </tr>
-                            <tr id="demo{{$collapse->id_mhs}}" class="collapse">
-                                <td colspan="6" class="hiddenRow"><div><strong>{{$collapse->name}}</strong></div> </td>
-                                <td class="align-self-end"><div>
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{$collapse->id_mhs}}" class="mr-3 text-sm bg-blue-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"><a href={{$collapse->id_mhs}} >APPLY ALL</a></button>
-                                    </div></td>
-                                <div class="modal fade" id="exampleModal{{$collapse->id_mhs}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel{{$collapse->id_mhs}}">Mata Kuliah</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                @foreach($getmahasiswa2 as $collapses)
-                                                {{$collapses->mk}}<br>
-                                                @endforeach
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </tr>
-                            </tbody>
-                            @endforeach
-                        </table>
-                    </div>
+
                 <div class="flex-auto">
                     <table class="ml-2.5 shadow-lg 2xl:bg-auto">
                         <tr>
@@ -94,11 +54,11 @@
                             </td>
                             <td class="border px-8 py-4">
                                 @if ($m->status_request == 0)
-                                <button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"><a href={{ url('/dashboard/approve',$m->id) }}>APPROVE</a></button>
-                                <button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"><a href="{{ url('dashboard/reject', $m->id) }}">REJECT</a></button>
+                                <button type="button" class="mr-3 text-sm bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"><a href={{ url('/dashboard/approve',$m->id) }}>APPROVE</a></button>
+                                <button type="button" class="mr-3 text-sm bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"><a href="{{ url('dashboard/reject', $m->id) }}">REJECT</a></button>
                                 @else
-                                <button type="button" class="disabled:opacity-50 mr-3 text-sm bg-blue-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" disabled><a href="#">APPROVE</a></button>
-                                <button type="button" class="disabled:opacity-50 mr-3 text-sm bg-blue-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" disabled><a href="#">REJECT</a></button>
+                                <button type="button" class="disabled:opacity-50 mr-3 text-sm bg-green-500 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" disabled><a href="#">APPROVE</a></button>
+                                <button type="button" class="disabled:opacity-50 mr-3 text-sm bg-red-500 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" disabled><a href="#">REJECT</a></button>
                                 @endif
                             </td>
                         </tr>

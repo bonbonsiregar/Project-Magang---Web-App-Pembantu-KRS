@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Lr2;
 
 class DashboardController extends Controller
 {
@@ -15,15 +14,16 @@ class DashboardController extends Controller
             return view('dashboard_mahasiswa',['mk'=> $mk]);
         }
         else if (Auth::user()->hasRole('dosen')){
-            return view('dashboard_dosen');
+            $lr = DB::table('lr2')->get();
+            return view('dashboard_dosen', compact('lr'));
         }
         else if(Auth::user()->hasRole('admin')){
             $lr = DB::table('lr2')->get();
             $notifications = DB::table('lr2')->distinct()->count('id_mhs');
             $getmahasiswa = DB::table('lr2')->select('lr2.id_mhs', 'users.name', 'lr2.mk')
-            ->join('users', 'lr2.id_mhs', '=', 'users.id')->distinct()->get();
+            ->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
             $getmahasiswa2 = DB::table('lr2')->select('lr2.id_mhs', 'users.name', 'lr2.mk')
-            ->join('users', 'lr2.id_mhs', '=', 'users.id')->distinct()->get();
+            ->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
             //$get = $getmahasiswa2->groupBy('name')->all();
             //dd($lr, $notifications, $getmahasiswa, $get);
             return view('dashboard', compact('lr', 'notifications', 'getmahasiswa', 'getmahasiswa2'));
@@ -50,9 +50,9 @@ class DashboardController extends Controller
     }
 
     public function request(Request $request){
-        $check = DB::table('lr2')->where('mk',$request->mk)->first();
+        $check = DB::table('lr2')->where('mk', $request->mk)->first();
         $checkStatus = DB::table('lr2')->where('status_request',$request->s_request = null);
-        if(!$check && $checkStatus){
+        if($checkStatus){
         DB::table('lr2')->insert([
             'id_mhs' => $request->user_id,
             'k_mk' => $request->kode_mk,
@@ -62,11 +62,12 @@ class DashboardController extends Controller
         ]);
         return redirect()->back()->with('message', 'Request telah dikirim');
         }
-        else if($check && !$checkStatus){
+        else if(!$checkStatus){
         DB::table('lr2')->insert([
                 'status_request' => '1'
             ]);
         return redirect()->back()->withErrors('Data existed in DB');
+        dd();
         }
     }
 
@@ -104,7 +105,7 @@ class DashboardController extends Controller
     }
 
     public function mkasrequest($id){
-        $getmahasiswa2 = DB::table('lr2')->distinct()->select('lr2.id', 'lr2.id_mhs', 'users.name', 'lr2.mk', 'lr2.k_mk', 'lr2.status_request')->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
+        $getmahasiswa2 = DB::table('lr2')->select('lr2.id', 'lr2.id_mhs', 'users.name', 'lr2.mk', 'lr2.k_mk', 'lr2.status_request')->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
         $req = $getmahasiswa2->where('id', '=', $id)->all();
         return view('mkasrequest', compact('req'));
     }
