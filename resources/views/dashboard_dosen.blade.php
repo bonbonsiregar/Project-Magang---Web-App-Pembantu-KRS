@@ -21,7 +21,7 @@
                             <th class="bg-blue-100 border text-left px-8 py-4">Status Request</th>
                             <th class="bg-blue-100 border text-left px-8 py-4">Action</th>
                         </tr>
-                        @foreach($lr as $m)
+                        @foreach($dosen as $m)
                             <tr>
                                 <td class="border px-8 py-4">{{ $m->k_mk }}</td>
                                 <td class="border px-8 py-4">{{ $m->mk }}</td>

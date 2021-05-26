@@ -19,13 +19,14 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div>
-                        <table class="shadow-lg bg-auto table-auto">
+                        <table class="w-full shadow-lg bg-auto table-auto">
                             <tr>
                                 <th class="bg-blue-100 border text-left px-8 py-4">Kode Mata Kuliah</th>
                                 <th class="bg-blue-100 border text-left px-8 py-4">Mata Kuliah</th>
                                 <th class="bg-blue-100 border text-left px-8 py-4">ID Mahasiswa</th>
                                 <th class="bg-blue-100 border text-left px-8 py-4">Nama Mahasiswa</th>
                                 <th class="bg-blue-100 border text-left px-8 py-4">Status Request</th>
+                                <th class="bg-blue-100 border text-left px-8 py-4">Action</th>
 
                             </tr>
                             @foreach($req as $reqs)

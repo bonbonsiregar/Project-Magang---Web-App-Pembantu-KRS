@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function(){
 //Route untuk role admin/kaprodi
 Route::group(['middleware' => ['auth', 'role:admin']], function(){
     Route::get('/dashboard/createliverequest','App\Http\Controllers\DashboardController@createliverequest')->name('dashboard.createliverequest');
+    Route::get('/dashboard/requestpermahasiswa','App\Http\Controllers\DashboardController@requestpermahasiswa')->name('dashboard.requestpermahasiswa');
+
 });
 //Route pada saat admin menambahkan/membuka mata kuliah
 Route::post('/dashboard/store','App\Http\Controllers\DashboardController@store')->name('dashboard.store');
@@ -43,7 +45,7 @@ Route::get('/dashboard/cancel/{id}', 'App\Http\Controllers\DashboardController@c
 
 Route::get('/dashboard/nameasrequest/{id}', 'App\Http\Controllers\DashboardController@nameasrequest')->name('dashboard.nameasrequest');
 
-Route::get('/dashboard/mkasrequest/{id}', 'App\Http\Controllers\DashboardController@mkasrequest')->name('dashboard.mkasrequest');
+Route::get('/dashboard/mkasrequest/{k_mk}', 'App\Http\Controllers\DashboardController@mkasrequest')->name('dashboard.mkasrequest');
 
 Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     Route::get('/dashboard/requestkrs/{id}', 'App\Http\Controllers\DashboardController@requestkrs')->name('dashboard.requestkrs');

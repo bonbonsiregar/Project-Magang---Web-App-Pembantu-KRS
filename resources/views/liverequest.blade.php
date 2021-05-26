@@ -23,7 +23,8 @@
                             <tr>
                                 <th class="bg-blue-100 border text-left px-8 py-4">Kode Mata Kuliah</th>
                                 <th class="bg-blue-100 border text-left px-8 py-4">Mata Kuliah</th>
-                                <th class="bg-blue-100 border text-left px-8 py-4">Angkatan</th>
+                                <th class="bg-blue-100 border text-left px-8 py-4">Created At</th>
+                                <th class="bg-blue-100 border text-left px-8 py-4">Updated At</th>
                                 <th class="bg-blue-100 border text-left px-8 py-4">Requested Seats</th>
                                 <th class="bg-blue-100 border text-left px-8 py-4">Status Request</th>
                                 <th class="bg-blue-100 border text-left px-8 py-4">Action</th>
@@ -32,12 +33,26 @@
                                 <tr>
                                     <td class="border px-8 py-4">{{ $m->k_mk }}</td>
                                     <td class="border px-8 py-4">{{ $m->mk }}</td>
-                                    <td class="border px-8 py-4">{{ $m->angkatan }}</td>
+                                    <td class="border px-8 py-4">{{ $m->created_at }}</td>
+                                    <td class="border px-8 py-4">{{ $m->updated_at }}</td>
                                     <td class="border px-8 py-4">{{ $m->request_seats }}</td>
-                                    <td class="border px-8 py-4">{{ ($m->status_request == 0) ? "PENDING" : "APPROVED" }}
+                                    <td class="border px-8 py-4">
+                                        @if($m->status_request == 0)
+                                            PENDING
+                                        @elseif($m->status_request == 1)
+                                            APPROVED
+                                        @else
+                                            REJECTED
+                                        @endif
                                     </td>
                                     <td class="border px-8 py-4">
+                                        @if($m->status_request == 0)
                                         <button type="button" class="btn btn-danger"><a href="{{ url("dashboard/cancel",$m->id) }}">Cancel</a></button>
+                                        @elseif($m->status_request == 2)
+                                            <button type="button" class="btn btn-primary"><a href="{{ url("dashboard/requestkrs",$m->id) }}">Request Again</a></button>
+                                        @else
+                                            <button type="button" class="btn btn-primary" disabled><a href="{{ url("dashboard/requestkrs",$m->id) }}">Request Again</a></button>
+                                        @endif
                                     </td>
                                 </tr>
                         @endforeach

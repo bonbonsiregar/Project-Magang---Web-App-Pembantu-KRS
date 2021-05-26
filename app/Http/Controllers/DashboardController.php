@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,19 +15,12 @@ class DashboardController extends Controller
             return view('dashboard_mahasiswa',['mk'=> $mk]);
         }
         else if (Auth::user()->hasRole('dosen')){
-            $lr = DB::table('lr2')->get();
-            return view('dashboard_dosen', compact('lr'));
+            $dosen = DB::table('lr2')->get();
+            return view('dashboard_dosen', compact('dosen'));
         }
         else if(Auth::user()->hasRole('admin')){
-            $lr = DB::table('lr2')->get();
-            $notifications = DB::table('lr2')->distinct()->count('id_mhs');
-            $getmahasiswa = DB::table('lr2')->select('lr2.id_mhs', 'users.name', 'lr2.mk')
-            ->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
-            $getmahasiswa2 = DB::table('lr2')->select('lr2.id_mhs', 'users.name', 'lr2.mk')
-            ->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
-            //$get = $getmahasiswa2->groupBy('name')->all();
-            //dd($lr, $notifications, $getmahasiswa, $get);
-            return view('dashboard', compact('lr', 'notifications', 'getmahasiswa', 'getmahasiswa2'));
+            $lr = DB::table('lr2')->get()->unique('k_mk');
+            return view('dashboard', compact('lr'));
         }
     }
     public function liverequest(){
@@ -43,6 +37,12 @@ class DashboardController extends Controller
         return view('createliverequest', ['semester' => $getsemester, 'allsemester' => $getallsemester]);
     }
 
+    public function requestpermahasiswa(){
+        $getmahasiswa = DB::table('lr2')->select('lr2.id_mhs', 'users.name', 'lr2.mk')->join('users', 'lr2.id_mhs', '=', 'users.id')->get()->unique('id_mhs');
+//        dd($getmahasiswa);
+        return view('requestpermahasiswa', compact('getmahasiswa'));
+    }
+
     public function requestkrs($id){
         $req = DB::table('mk')->find($id);
         return view('requestkrs', compact('req'));
@@ -50,25 +50,26 @@ class DashboardController extends Controller
     }
 
     public function request(Request $request){
-        $check = DB::table('lr2')->where('mk', $request->mk)->first();
-        $checkStatus = DB::table('lr2')->where('status_request',$request->s_request = null);
-        if($checkStatus){
+        $check = DB::table('lr2')->where('k_mk', $request->kode_mk)->first();
+        $check2 = DB::table('lr2')->where('id_mhs', $request->user_id)->first();
+        if(!$check && !$check2){
         DB::table('lr2')->insert([
             'id_mhs' => $request->user_id,
             'k_mk' => $request->kode_mk,
             'mk' => $request->mk,
             'request_seats' => $request->r_seats,
-            'status_request' => '0'
+            'status_request' => '0',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ]);
         return redirect()->back()->with('message', 'Request telah dikirim');
         }
-        else if(!$checkStatus){
-        DB::table('lr2')->insert([
-                'status_request' => '1'
-            ]);
-        return redirect()->back()->withErrors('Data existed in DB');
-        dd();
-        }
+//        else if(!$check){
+//        DB::table('lr2')->insert([
+//                'status_request' => '1'
+//            ]);
+       return redirect()->back()->withErrors('Data existed in DB');
+//        }
     }
 
     public function store(Request $request){
@@ -104,9 +105,10 @@ class DashboardController extends Controller
         return view('nameasrequest', compact('req'));
     }
 
-    public function mkasrequest($id){
+    public function mkasrequest($k_mk){
         $getmahasiswa2 = DB::table('lr2')->select('lr2.id', 'lr2.id_mhs', 'users.name', 'lr2.mk', 'lr2.k_mk', 'lr2.status_request')->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
-        $req = $getmahasiswa2->where('id', '=', $id)->all();
+        $req = $getmahasiswa2->where('k_mk', '=', $k_mk)->all();
+//        dd($getmahasiswa2, $req);
         return view('mkasrequest', compact('req'));
     }
 }

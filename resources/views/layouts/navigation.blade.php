@@ -25,9 +25,16 @@
                 </div>
                 @endif
                 @if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('dashboard.requestpermahasiswa')" :active="request()->routeIs('dashboard')">
+                            {{ __('Lihat request per Mahasiswa') }}
+                        </x-nav-link>
+                    </div>
+                @endif
+                @if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard.createliverequest')" :active="request()->routeIs('dashboard')">
-                        {{ __('Approve Live Request KRS') }}
+                        {{ __('Buka Mata Kuliah') }}
                     </x-nav-link>
                 </div>
                 @endif

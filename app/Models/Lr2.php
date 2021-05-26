@@ -11,7 +11,7 @@ class Lr2 extends Model
 
     protected $table = 'lr2';
 
-    public function getMahasiswa(){
-        return $this->belongsTo('App\Model\User');
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }
