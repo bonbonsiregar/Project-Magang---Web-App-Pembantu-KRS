@@ -11,7 +11,8 @@ class DashboardController extends Controller
 {
     public function index(){
         if (Auth::user()->hasRole('mahasiswa')){
-            $mk = DB::table('mk')->get();
+            $mk = DB::table('mk')->select('mk.id', 'mk.semester_id', 'kode_semester.nama_semester', 'mk.k_mk', 'mk.mk', 'mk.sks', 'mk.semester', 'mk.available_seats')
+            ->join('kode_semester', 'mk.semester_id', '=', 'kode_semester.id')->get();
             return view('dashboard_mahasiswa',['mk'=> $mk]);
         }
         else if (Auth::user()->hasRole('dosen')){

@@ -30,7 +30,7 @@
                             <td class="border px-8 py-4">{{ $m->mk }}</td>
                             <td class="border px-8 py-4">{{ $m->sks }}</td>
                             <td class="border px-8 py-4">{{ $m->semester }}</td>
-                            <td class="border px-8 py-4">{{ $m->semester_id }}</td>
+                            <td class="border px-8 py-4">{{ $m->nama_semester }}</td>
                             <td class="border px-8 py-4">{{ $m->available_seats }}</td>
                             <td class="border px-8 py-4">
                                 <button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"><a href="{{ url('/dashboard/requestkrs',$m->id) }}">Request Kelas</a></button>
