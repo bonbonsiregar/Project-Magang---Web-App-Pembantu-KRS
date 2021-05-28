@@ -14,19 +14,13 @@
                     Email: {{\Illuminate\Support\Facades\Auth::user()->email}} <br>
                 </div>
                 <div class="flex items-center justify-center">
-                    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="/dashboard/request" method="post">
+                    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action={{ url('/dashboard/request2',$req->id) }} method="post">
                         {{ csrf_field() }}
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">
                                 ID Mahasiswa
                             </label>
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="user_id" value="{{ Auth::user()->id }}" readonly>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">
-                                Semester
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="semester" value="{{ $req->semester }}" readonly>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -40,25 +34,13 @@
                             </label>
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="mk" value="{{ $req->mk }}" readonly>
                         </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">
-                                SKS
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="sks" value="{{ $req->sks }}" readonly>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">
-                                Request Seats
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="r_seats" value="{{ $req->available_seats }}" readonly>
-                        </div>
                         @if (session('message'))
                             <div class="alert alert-danger">
                                 {{ session('message') }}
                             </div>
-                        @elseif(session('alert'))
+                        @elseif(session('message'))
                             <div class="alert alert-success">
-                                {{session('alert')}}
+                                {{session('message')}}
                             </div>
                         @endif
                         <div class="flex items-center justify-center">

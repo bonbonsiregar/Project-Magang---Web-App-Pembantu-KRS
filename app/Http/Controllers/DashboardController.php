@@ -51,9 +51,9 @@ class DashboardController extends Controller
     }
 
     public function request(Request $request){
-        $check = DB::table('lr2')->where('k_mk', $request->kode_mk)->first();
-        $check2 = DB::table('lr2')->where('id_mhs', $request->user_id)->first();
-        if(!$check && !$check2){
+        $check = DB::table('lr2')->where('k_mk', $request->kode_mk)->where('id_mhs', $request->user_id)->exists();
+        //$check2 = DB::table('lr2')->where('k_mk', $request->kode_mk)->where('id_mhs', $request->user_id)->where('created at', '<', Carbon::now())->exists();
+        if(!$check){
         DB::table('lr2')->insert([
             'id_mhs' => $request->user_id,
             'k_mk' => $request->kode_mk,
@@ -63,13 +63,13 @@ class DashboardController extends Controller
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
-        return redirect()->back()->with('message', 'Request telah dikirim');
+        return redirect()->back()->with('alert', 'Request telah dikirim');
         }
-//        else if(!$check){
-//        DB::table('lr2')->insert([
-//                'status_request' => '1'
-//            ]);
-       return redirect()->back()->withErrors('Data existed in DB');
+        else{
+            return redirect()->back()->with('message', 'Data existed in DB!');
+        }
+//        if ($check2){
+//
 //        }
     }
 
@@ -111,5 +111,23 @@ class DashboardController extends Controller
         $req = $getmahasiswa2->where('k_mk', '=', $k_mk)->all();
 //        dd($getmahasiswa2, $req);
         return view('mkasrequest', compact('req'));
+    }
+    public function requestagain($id){
+        $req = DB::table('lr2')->find($id);
+        return view('requestagain', compact('req'));
+    }
+    public function request2(Request $request, $id){
+        $check = DB::table('lr2')->where('k_mk', $request->kode_mk)->where('id_mhs', $request->user_id)->exists();
+        if($check){
+            DB::table('lr2')->where('id', $id)->update([
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'status_request' => '0'
+             ]);
+            return redirect()->back()->with('message', "Request telah dikirim kembali");
+        }
+        else if(!$check){
+        return redirect()->back()->with('message', "Request gagal");
+        }
     }
 }

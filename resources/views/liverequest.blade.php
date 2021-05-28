@@ -49,9 +49,9 @@
                                         @if($m->status_request == 0)
                                         <button type="button" class="btn btn-danger"><a href="{{ url("dashboard/cancel",$m->id) }}">Cancel</a></button>
                                         @elseif($m->status_request == 2)
-                                            <button type="button" class="btn btn-primary"><a href="{{ url("dashboard/requestkrs",$m->id) }}">Request Again</a></button>
+                                            <button type="button" class="btn btn-primary"><a href="{{ url("dashboard/requestagain",$m->id) }}">Request Again</a></button>
                                         @else
-                                            <button type="button" class="btn btn-primary" disabled><a href="{{ url("dashboard/requestkrs",$m->id) }}">Request Again</a></button>
+                                            <button type="button" class="btn btn-primary" disabled><a href="{{ url("dashboard/requestagain",$m->id) }}">Request Again</a></button>
                                         @endif
                                     </td>
                                 </tr>

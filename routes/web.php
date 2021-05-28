@@ -37,6 +37,9 @@ Route::post('/dashboard/store','App\Http\Controllers\DashboardController@store')
 //Route pada saat mahasiswa merequest mata kuliah
 Route::post('/dashboard/request','App\Http\Controllers\DashboardController@request')->name('dashboard.request');
 
+Route::post('/dashboard/request2/{id}','App\Http\Controllers\DashboardController@request2')->name('dashboard.request2');
+
+
 Route::get('/dashboard/approve/{id}', 'App\Http\Controllers\DashboardController@approve')->name('dashboard.approve');
 
 Route::get('/dashboard/reject/{id}', 'App\Http\Controllers\DashboardController@reject')->name('dashboard.reject');
@@ -49,6 +52,7 @@ Route::get('/dashboard/mkasrequest/{k_mk}', 'App\Http\Controllers\DashboardContr
 
 Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     Route::get('/dashboard/requestkrs/{id}', 'App\Http\Controllers\DashboardController@requestkrs')->name('dashboard.requestkrs');
+    Route::get('/dashboard/requestagain/{id}', 'App\Http\Controllers\DashboardController@requestagain')->name('dashboard.requestagain');
 });
 
 require __DIR__.'/auth.php';

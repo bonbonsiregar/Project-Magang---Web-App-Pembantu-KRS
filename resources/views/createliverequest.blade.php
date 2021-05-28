@@ -40,6 +40,11 @@
                         <div class="mb-4">
                         Available Seats <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="a_seats" required="required"> <br/>
                         </div>
+                        @if(session('message'))
+                            <div class="alert alert-success">
+                                {{session('message')}}
+                            </div>
+                        @endif
                         <div class="flex items-center justify-center">
                         <input type="submit" value="Simpan Data">
                         </div>
