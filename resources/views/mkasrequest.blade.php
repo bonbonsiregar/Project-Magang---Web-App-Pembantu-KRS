@@ -46,11 +46,11 @@
                                     </td>
                                     <td class="border px-8 py-4">
                                         @if ($reqs->status_request == 0)
-                                            <button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"><a href={{ url('/dashboard/approve',$reqs->id) }}>APPROVE</a></button>
-                                            <button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"><a href="{{ url('dashboard/reject', $reqs->id) }}">REJECT</a></button>
+                                            <button type="button" class="mr-3 text-sm bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"><a href={{ url('/dashboard/approve',$reqs->id) }}>APPROVE</a></button>
+                                            <button type="button" class="mr-3 text-sm bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"><a href="{{ url('dashboard/reject', $reqs->id) }}">REJECT</a></button>
                                         @else
-                                            <button type="button" class="disabled:opacity-50 mr-3 text-sm bg-blue-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" disabled><a href="#">APPROVE</a></button>
-                                            <button type="button" class="disabled:opacity-50 mr-3 text-sm bg-blue-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" disabled><a href="#">REJECT</a></button>
+                                            <button type="button" class="disabled:opacity-50 mr-3 text-sm bg-green-500 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" disabled><a href="#">APPROVE</a></button>
+                                            <button type="button" class="disabled:opacity-50 mr-3 text-sm bg-red-500 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" disabled><a href="#">REJECT</a></button>
                                         @endif
                                     </td>
                                 </tr>
