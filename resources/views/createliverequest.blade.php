@@ -21,7 +21,7 @@
                         Pilih Semester:
                         <select name="semester_id">
                             @foreach($allsemester as $sm)
-                            <option value="{{$sm->id}}">{{$sm->id}} {{$sm->semester}}</option>
+                            <option value="{{$sm->id}}">{{$sm->nama_semester}}</option>
                             @endforeach
                         </select>
                         </div>

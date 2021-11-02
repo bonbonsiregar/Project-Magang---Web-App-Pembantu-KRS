@@ -16,7 +16,7 @@ class DashboardController extends Controller
             return view('dashboard_mahasiswa',['mk'=> $mk]);
         }
         else if (Auth::user()->hasRole('dosen')){
-            $dosen = DB::table('lr2')->get();
+            $dosen = DB::table('lr2')->get()->unique('k_mk');
             return view('dashboard_dosen', compact('dosen'));
         }
         else if(Auth::user()->hasRole('admin')){
@@ -32,9 +32,8 @@ class DashboardController extends Controller
 
     public function createliverequest(){
         $getallsemester = DB::table('kode_semester')->get();
-        $getsemester = DB::table('mk')->distinct()->select('mk.semester_id', 'kode_semester.semester')
+        $getsemester = DB::table('mk')->distinct()->select('mk.semester_id', 'kode_semester.nama_semester')
             ->join('kode_semester', 'mk.semester_id', '=', 'kode_semester.id')->get();
-        //dd($getallsemester);
         return view('createliverequest', ['semester' => $getsemester, 'allsemester' => $getallsemester]);
     }
 
@@ -109,7 +108,6 @@ class DashboardController extends Controller
     public function mkasrequest($k_mk){
         $getmahasiswa2 = DB::table('lr2')->select('lr2.id', 'lr2.id_mhs', 'users.name', 'lr2.mk', 'lr2.k_mk', 'lr2.status_request')->join('users', 'lr2.id_mhs', '=', 'users.id')->get();
         $req = $getmahasiswa2->where('k_mk', '=', $k_mk)->all();
-//        dd($getmahasiswa2, $req);
         return view('mkasrequest', compact('req'));
     }
     public function requestagain($id){
@@ -120,8 +118,6 @@ class DashboardController extends Controller
         $check = DB::table('lr2')->where('k_mk', $request->kode_mk)->where('id_mhs', $request->user_id)->exists();
         if($check){
             DB::table('lr2')->where('id', $id)->update([
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
                 'status_request' => '0'
              ]);
             return redirect()->back()->with('message', "Request telah dikirim kembali");
